@@ -1,0 +1,166 @@
+body {
+    --resize-menu-height: 40px;
+}
+
+.presentation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #1c1c1c;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider-container-wrapper {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.slider {
+    width: 100%;
+    position: relative;
+    height: max-content;
+}
+
+.slide {
+    height: auto;
+    background: antiquewhite;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: auto;
+}
+
+.slide-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide-content * {
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+}
+
+.slide-content *.clicked {
+    border: dashed 1px #000;
+}
+
+.text {
+    position: absolute;
+    word-break: break-word;
+}
+
+.proportion-image {
+    max-height: 700px;
+    visibility: hidden;
+    position: relative;
+    height: auto;
+    width: 100%;
+}
+
+.resize-menu,
+.font-settings {
+    height: var(--resize-menu-height);
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#elementHeight,
+#elementWidth {
+    width: 50px;
+}
+
+.tools-container {
+    border: solid 1px black;
+    max-width: 350px;
+}
+
+.tools-container__group {
+    border-bottom: solid 1px gray;
+    padding: 10px 15px;
+}
+
+.tools-container__group-header {
+    margin: 0;
+    padding: 0 0 10px;
+}
+
+.tools {
+    cursor: default;
+}
+
+.tool {
+    font-weight: normal;
+    display: inline-block;
+    padding: 3px;
+}
+
+.tool:hover {
+    cursor: pointer;
+}
+
+.clicked-tool {
+    background: #bbb;
+    border-radius: 5px;
+}
+
+.input-text {
+    height: 98%;
+    width: 98%;
+    display: none;
+    resize: none;
+    background: none;
+    font-size: inherit;
+}
+
+.double-clicked span {
+    display: none;
+}
+
+.double-clicked textarea {
+    display: block;
+}
+
+.dialog-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #cacacac2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog {
+    height: 200px;
+    background: #ddd;
+    width: 450px;
+    padding: 15px;
+    position: relative;
+}
+
+textarea:focus {
+    z-index: 1;
+}
+
+.choose {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+}

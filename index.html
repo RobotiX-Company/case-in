@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+                $( ".draggable" ).draggable({containment:".slide"});
+        } );
+    </script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body>
+    <div class="presentation" style="display: none"></div>
+    <div class="slider-container-wrapper">
+        <div class="slider theme-1" style="max-width: 933px">
+            <img class="proportion-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAFUlEQVQImWP8////fwYkwMSABjAEAMIKBALGdVY0AAAAAElFTkSuQmCC"/>
+            <div class="slide header" style="bottom: 0">
+                <div class="slide-content" onclick="clickOnSlider(this)">
+                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 50px; left: 70px; width: 150px; height: 150px;">
+                        <span class="text-content">Text</span>
+                        <textarea class="input-text" onchange='insertText(this)'></textarea>
+                    </div>
+                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 250px; left: 350px; width: 150px; height: 150px;">
+                        <span class="text-content">Drag me around</span>
+                        <textarea class="input-text" onchange='insertText(this)'></textarea>
+                    </div>
+                </div>
+            </div>
+            <div style="display: none; bottom: 0;" class="slide header">
+                <div class="slide-content" onclick="clickOnSlider(this)">
+                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 50px; left: 70px; width: 150px; height: 150px;">
+                        <span class="text-content">Text</span>
+                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
+                    </div>
+                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 250px; left: 350px; width: 150px; height: 150px;">
+                        <span class="text-content">Drag me around</span>
+                        <textarea class="input-text" onchange='insertText(this)'></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-container" style="display: none">
+                <div class="dialog">
+                    Загрузите медиа-файл
+                    <div class="choose">
+                        <button id="cancel">Отмена</button>
+                        <input class="upload-media" type="file">
+                    </div>
+                </div>
+            </div>
+            <div class="resize-menu" style="display: none">
+                <span>
+                    <span>Ширина:</span>
+                    <input id="elementWidth">
+                </span>
+                <span>
+                    <span>Высота:</span>
+                    <input id="elementHeight">
+                </span>
+            </div>
+            <div class="font-settings" style="display: none;">
+                <span>
+                    <span>Нажмите на текстовое окно, настройки которого вы хотите изменить</span>
+                </span>
+            </div>
+        </div>
+        <div class="tools-container">
+            <div class="tools-container__group">
+                <h3 class="tools-container__group-header">Основные</h3>
+                <div class="tools">
+                    <div class="tool clicked-tool" id="move">
+                        <i class="fa fa-arrows" title="Переместить"></i>
+                    </div>
+                    <div class="tool" id="changeSize">
+                        <i class="fa fa-arrows-alt" title="Изменить размер"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="tools-container__group">
+                <h3 class="tools-container__group-header">Текст</h3>
+                <div class="tools">
+                    <div class="tool" id="addText">
+                        <i class="fa fa-i-cursor" title="Добавить текстовое поле"></i>
+                    </div>
+                    <div class="tool" id="changeFontSettings">
+                        <i class="fa fa-cog" title="Изменить настройки текста"></i>
+                    </div>
+                    <div class="tool" id="changeFontSize">
+                        <i class="fa fa-text-height" title="Изменить размер текста"></i>
+                    </div>
+                    <div class="tool" id="changeFontColor">
+                        <i class="fa fa-tint" title="Изменить цвет текста"></i>
+                    </div>
+                    <div class="tool" id="changeBold">
+                        <i class="fa fa-bold" title="Изменить жирность текста"></i>
+                    </div>
+                    <div class="tool" id="underlineText">
+                        <i class="fa fa-underline" title="Подчеркнуть текст"></i>
+                    </div>
+                    <div class="tool" title="Зачеркнуть текст" style="text-decoration: line-through; font-weight: bold; font-size: 17px" id="throughText">
+                        T
+                    </div>
+                </div>
+            </div>
+            <div class="tools-container__group">
+                <h3 class="tools-container__group-header">Слайд</h3>
+                <div class="tools">
+                    <div class="tool" id="newSlaid" title="Создать слайд">
+                        +
+                    </div>
+                    <div class="tool" id="formatSlaid">
+                        <i class="fa fa-arrows-alt" title="Формат слайда"></i>
+                    </div>
+                    <div class="tool" id="dublSlaid">
+                        <i class="fa fa-clone" title="Le,kbhjdfnm ckfql"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tools-container__group">
+                <h3 class="tools-container__group-header">Медиа</h3>
+                <div class="tools">
+                    <div class="tool" id="img">
+                        <i class="fa fa-file-image-o" title="Вставить изображение"></i>
+                    </div>
+                    <div class="tool" id="video">
+                        <i class="fa fa-file-video-o" title="Вставить видео"></i>
+                    </div>
+                    <div class="tool" id="audio">
+                        <i class="fa fa-file-audio-o" title="Вставить аудио"></i>
+                    </div>
+                    <div class="tool" id="table" title="Вставить таблицу">
+                        <i class="fa fa-table"></i>
+                    </div>
+                    <div class="tool" id="diogramm">
+                        <i class="fa fa-line-chart" title="Вставить диаграмму"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="tools-container__group">
+                <h3 class="tools-container__group-header">Файл</h3>
+                <div class="tools">
+                    <div class="tool" id="redactor">
+                        <i class="fa fa-pencil-square-o" title="Открыть документ"></i>
+                    </div>
+                    <div class="tool" id="pdf">
+                        <i class="fa fa-file-pdf-o" title="Сохранить как PDF документ"></i>
+                    </div>
+                    <div class="tool" id="html">
+                        <i class="fa fa-code" title="Сохранить как HTML документ"></i>
+                    </div>
+                    <div class="tool" id="js">
+                        <i class="fa fa-file-o" title="Сохранить как JS документ"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="inputApp.js"></script>
+</body>
+</html>
