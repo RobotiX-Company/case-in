@@ -49,30 +49,32 @@
                     <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 150px; left: 260px; width: 180px; height: 180px; border: solid;">
                         <span class="text-content">Вставьте сюда фото участника</span>
                         <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
-                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 150px; left: 70px; width: 180px; height: 180px; border: solid;">
-                        <span class="text-content">Вставьте сюда фото участника</span>
-                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
-                    </div>
-                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 150px; left: 640px; width: 180px; height: 180px; border: solid;">
-                        <span class="text-content">Вставьте сюда фото участника</span>
-                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
-                    </div>
-                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 150px; left: 450px; width: 180px; height: 180px; border: solid;">
-                        <span class="text-content">Вставьте сюда фото участника</span>
-                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
-                    </div>
-                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 150px; left: 260px; width: 180px; height: 180px; border: solid;">
-                        <span class="text-content">Вставьте сюда фото участника</span>
-                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
                     </div>
                     <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 30px; left:    70px; width: 400px; height: 40px; color: #fff; padding: 5px; background: #1f497d;">
                         <span class="text-content">Презентация команды</span>
                         <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
                     </div>
+                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 340px; left: 640px; width: 180px; height: 180px; border: solid;">
+                        <span class="text-content">Введите описание участника</span>
+                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
+                    </div>
+                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 340px; left: 450px; width: 180px; height: 180px; border: solid;">
+                        <span class="text-content">Введите описание участника</span>
+                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
+                    </div>
+                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 340px; left: 260px; width: 180px; height: 180px; border: solid;">
+                        <span class="text-content">Введите описание участника</span>
+                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
+                    </div>
+                    <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 340px; left: 70px; width: 180px; height: 180px; border: solid;">
+                        <span class="text-content">Введите описание участника</span>
+                        <textarea class="input-text" onchange='insertText(this)' onclick="window.allowAddTexts = false;"></textarea>
+                    </div>
+                    </div>
                 </div>
-            </div>
             <div id="leftArrow" style="display: none; position: absolute; bottom: 5px; left: 5px; cursor: pointer; font-size: 20px; color: #000;" onclick="changeSlide(-1);"><i class="fa fa-arrow-circle-o-left"></i></div>
             <div id="rightArrow" style="position: absolute; bottom: 5px; right: 5px; cursor: pointer; font-size: 20px; color: #000;" onclick="changeSlide(1);"><i class="fa fa-arrow-circle-o-right"></i></div>
+        </div>
             <div style="display: none; bottom: 0;" class="slide header">
                 <div class="slide-content" onclick="clickOnSlider(this)">
                     <div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; top: 50px; left: 70px; width: 150px; height: 150px;">
@@ -84,7 +86,6 @@
                         <textarea class="input-text" onchange='insertText(this)'></textarea>
                     </div>
                 </div>
-            </div>
             </div>
             <div class="dialog-container" style="display: none">
                 <div class="dialog">
@@ -125,7 +126,6 @@
                     <span>Нажмите на текстовое окно, настройки которого вы хотите изменить</span>
                 </span>
             </div>
-        </div>
         <div class="tools-container">
             <div class="tools-container__group">
                 <h3 class="tools-container__group-header">Основные</h3>
@@ -214,6 +214,7 @@
                     <div class="tool" id="js">
                         <i class="fa fa-file-o" title="Сохранить как JS документ"></i>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
