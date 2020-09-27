@@ -76,9 +76,17 @@ document.getElementById('throughText').addEventListener('click', setFontSettings
 document.getElementById('img').addEventListener('click', openDialog);
 document.getElementById('video').addEventListener('click', openDialog);
 document.getElementById('audio').addEventListener('click', openDialog);
-document.getElementById('cancel').addEventListener('click', closeDialog);
+document.getElementById('newSlaid').addEventListener('click', newSlide);
 document.getElementsByClassName('dialog-container')[0].addEventListener('change', uploadImage);
+document.getElementById('js').addEventListener('click', saveAsJs);
+document.getElementsByClassName('upload-presentation')[0].addEventListener('change', openJSON);
+document.getElementById('redactor').addEventListener('click', function () {
+    document.getElementsByClassName('dialog-container')[2].style.display = 'flex';
+});
 document.documentElement.setAttribute('onkeyup', 'keyUp(event)');
+document.getElementById('cancel').addEventListener('click', closeDialog);
+document.getElementById('cancelSave').addEventListener('click', closeDialog);
+document.getElementById('cancelOpen').addEventListener('click', closeDialog);
 
 //tools functions
 window.Tools = {
@@ -112,6 +120,7 @@ function enableMoveElements(flag) {
     else {
         clickOnTool(document.getElementById('move'), window.tools.draggable ? 'remove' : 'add')
     }
+    $( ".draggable" ).draggable({containment:".slide"});
     $( ".draggable" ).draggable(method);
     window.tools.draggable = draggable ? false : true;
 }
@@ -206,6 +215,8 @@ function openDialog() {
 
 function closeDialog() {
     document.getElementsByClassName('dialog-container')[0].style.display = 'none';
+    document.getElementsByClassName('dialog-container')[1].style.display = 'none';
+    document.getElementsByClassName('dialog-container')[2].style.display = 'none';
 }
 
 function uploadImage() {
@@ -260,6 +271,15 @@ function openMedia(file, tag) {
 
 }
 
+function newSlide() {
+    let slide = `<div style="display: none; bottom: 0;" class="slide header">
+        <div class="slide-content" onclick="clickOnSlider(this)">
+        </div>
+    </div>`;
+    document.getElementsByClassName('slide')[activeSlide].outerHTML += slide;
+    changeSlide(1);
+}
+
 //hot keys
 
 function keyUp(event) {
@@ -270,6 +290,169 @@ function keyUp(event) {
         fullScreenTag.innerHTML = '';
         enableMoveElements();
         fullScreenTag.appendChild(document.getElementsByClassName('slider')[0]);
+    }
+}
+
+//slider
+
+function changeSlide(slide) {
+    let slideNumber = window.activeSlide + slide;
+    let slidesTags = document.getElementsByClassName('slide');
+    for (let i = 0; i < slidesTags.length; i++) {
+        slidesTags[i].style.display = 'none';
+    }
+    slidesTags[slideNumber].style.display = 'block';
+    document.getElementById('leftArrow').style.display = 'none';
+    document.getElementById('rightArrow').style.display = 'none';
+    if (slidesTags[slideNumber-1] != undefined) {
+        document.getElementById('leftArrow').style.display = 'block';
+        document.getElementById('leftArrow').style.zIndex = '1000';
+    }
+    if (slidesTags[slideNumber+1] != undefined) {
+        document.getElementById('rightArrow').style.display = 'block';
+        document.getElementById('rightArrow').style.zIndex = '1000';
+    }
+    window.activeSlide = slideNumber;
+}
+
+// save
+/*data = [
+    [
+        {
+            type: 'div',
+            top: '300px',
+            left: '300px',
+            width: '350px',
+            height: '250px',
+            data: 'qwer tyuiop[ asd f ghjkl;z xcvbnm, ./',
+            zindex: '5'
+        },
+        {
+            type: 'img',
+            top: '0px',
+            left: '0px',
+            width: '100%',
+            height: 'auto',
+            data: '',
+            zindex: '1'
+        },
+        {
+            type: 'video',
+            top: '0px',
+            left: '0px',
+            width: '350px',
+            height: 'auto',
+            zindex: '10',
+            data: ''
+        },
+        {
+            type: 'audio',
+            top: '0px',
+            left: '350px',
+            width: '100%',
+            height: 'auto',
+            zindex: '1',
+            data: ''
+        }
+    ]
+]*/
+
+/*templates = {
+    text: `<div class="ui-widget-content text draggable" onclick="clickOnElement(this)" ondblclick="editText(this)" ondragstart="clickOnElement(this)" style="font-size: 36px; z-index: {{Z_INDEX}}; top: {{TOP}}; left: {{LEFT}}; width: {{WIDTH}}; height: {{HEIGHT}};"><span class="text-content">{{TEXT}}</span><textarea class="input-text" onchange='insertText(this)'></textarea></div>`,
+   video: `<video src="{{DATA}}" style="top: {{TOP}}; left: {{LEFT}}; width: {{WIDTH}}; height: {{HEIGHT}};" class="ui-widget-content image draggable clicked ui-draggable ui-draggable-handle" onclick="clickOnElement(this)" ondragstart="clickOnElement(this)"></video>`
+}*/
+
+function saveAsJs() {
+    window.data = [];
+    let slides = document.getElementsByClassName('slide-content');
+    for (let i = 0; i < slides.length; i++) {
+        window.data[i] = [];
+        let elements = slides[i].children;
+        for (let j = 0; j < elements.length; j++) {
+            let element = elements[j];
+            window.data[i][j] = {};
+            window.data[i][j].type = element.tagName.toLowerCase();
+            window.data[i][j].top = element.style.top;
+            window.data[i][j].left = element.style.left;
+            window.data[i][j].width = element.style.width;
+            window.data[i][j].height = element.style.height;
+            window.data[i][j].zindex = element.style.zIndex;
+            window.data[i][j].data = element.tagName == 'DIV' ? element.getElementsByTagName('span')[0].innerText : element.src;
+        }
+    }
+    console.log(window.data);
+    let file = new Blob(
+        [JSON.stringify(window.data)], {
+            type: 'application/json'
+        }
+    )
+    const link = document.createElement('a');
+    link.setAttribute('href', URL.createObjectURL(file));
+    link.setAttribute('download', 'data.json');
+    link.textContent = 'Скачать в формате .json';
+    document.getElementsByClassName('link-container')[0].appendChild(link);
+    document.getElementsByClassName('dialog-container')[1].style.display = 'flex';
+}
+
+//open file
+
+function openJSON() {
+    let input = document.getElementsByClassName('upload-presentation')[0];
+    let file = input.files[0];
+    const type = file.type;
+    window.data = [];
+    if (type == 'application/json') {
+        let reader = new FileReader();
+
+        reader.readAsText(file);
+
+        reader.onload = function() {
+            window.data = reader.result;
+        };
+
+        reader.onerror = function () {
+            console.log(reader.error);
+        }
+    }
+    if (file.type === 'application/pdf') {
+        createIframe(file)
+        return;
+    }
+    closeDialog();
+    let slides = document.getElementsByClassName('slide');
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].remove();
+    }
+    for (let i = 0; i < window.data.length; i++) {
+        let slide = document.createElement('div');
+        slide.className = 'slide header';
+        slide.style = 'display: none; bottom: 0;';
+        let slideContent = document.createElement('div');
+        slideContent.className = 'slide-content';
+        slideContent.setAttribute('onclick', 'clickOnSlider(this)');
+        for (let j = 0; j < window.data[i].length; j++) {
+            let element = document.createElement(window.data[i][j].type);
+                element.className = 'ui-widget-content text draggable';
+            element.setAttribute('onclick', 'clickOnElement(this)');
+            element.setAttribute('ondragstart', 'clickOnElement(this)');
+            if (window.data[i][j].type) {
+                element.setAttribute('ondblclick', 'clickOnElement(this)');
+            }
+            element.style.top = window.data[i][j].top;
+            element.style.left = window.data[i][j].left;
+            element.style.width = window.data[i][j].width;
+            element.style.height = window.data[i][j].height;
+            element.style.zIndex = window.data[i][j].zindex;
+            if (element.tagName == 'DIV') {
+                element.getElementsByTagName('span')[0].innerText = window.data[i][j];
+            }
+            else {
+                element.src = window.data[i][j];
+            }
+            slideContent.appendChild(element);
+        }
+        slide.appendChild(slideContent);
+        document.getElementsByClassName('slider')[0].appendChild(slide);
     }
 }
 
